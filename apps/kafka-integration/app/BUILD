@@ -6,7 +6,8 @@ COMPILE_DEPS = CORE_DEPS + JACKSON + KRYO + CLI + [
     "//utils/rest:onlab-rest",
     "@com_google_protobuf//:protobuf_java",
     "//core/protobuf/models:onos-core-protobuf-models",
-    "//core/protobuf/models/proto:onos-core-protobuf-services-proto",
+    #"//core/protobuf/models/proto:onos-core-protobuf-services-proto",
+    "//core/protobuf/models/proto:onos-core-protobuf-models-proto",
 ]
 
 osgi_jar_with_tests(
