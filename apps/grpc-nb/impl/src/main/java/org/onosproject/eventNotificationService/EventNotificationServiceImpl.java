@@ -90,7 +90,7 @@ public class EventNotificationServiceImpl extends EventNotificationImplBase
 
         observerMap.put(topic.getClientId() + topic.getType(), observer);
         log.info("The client " + topic.getClientId()
-                + "subscribed to" + topic.getType().name());
+                + " subscribed to " + topic.getType().name() );
 
     }
 
