@@ -1,14 +1,14 @@
 syntax = "proto3";
 option java_package = "org.onosproject.grpc.net.models";
 
-package net;
+package net.packet;
 
 import "core/protobuf/models/proto/net/packet/OutboundPacketProto.proto";
 import "core/protobuf/models/proto/net/packet/PacketContextProto.proto";
 import "core/protobuf/models/proto/net/link/LinkEventProto.proto";
 
 service PacketOutService {
-    rpc emit (net.packet.OutboundPacketProto) returns (PacketOutStatus);
+    rpc emit (OutboundPacketProto) returns (PacketOutStatus);
 }
 
 message PacketOutStatus {
@@ -48,7 +48,7 @@ message Notification {
     string serverId = 2;
     topicType type = 3;
     oneof event {
-        net.packet.PacketContextProto packetContext = 4;
+        PacketContextProto packetContext = 4;
         net.link.LinkNotificationProto linkEvent = 5;
 
     }
