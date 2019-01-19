@@ -89,6 +89,8 @@ public class EventNotificationServiceImpl extends EventNotificationImplBase
     public void onEvent(Topic topic, StreamObserver<Notification> observer) {
 
         observerMap.put(topic.getClientId() + topic.getType(), observer);
+        log.info("The client " + topic.getClientId()
+                + "subscribed to" + topic.getType().name());
 
     }
 

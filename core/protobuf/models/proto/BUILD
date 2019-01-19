@@ -68,14 +68,6 @@ PROTO_LIBS = [
 
 
 
-
-
-#osgi_proto_jar(
-#    name = "onos-core-protobuf-services-proto",
-#    grpc_proto_lib = ":Services_proto",
-#    proto_libs = PROTO_LIBS2,
-#)
-
 osgi_proto_jar(
     name = "onos-core-protobuf-models-proto",
     grpc_proto_lib = ":Services_proto",
