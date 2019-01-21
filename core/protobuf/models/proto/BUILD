@@ -63,10 +63,14 @@ PROTO_LIBS = [
     ":ProviderId_proto",
     ":Region_proto",
     ":Permission_proto",
-    ":Services_proto"
+    ":Services_proto",
 ]
 
-
+#osgi_proto_jar(
+#    name = "onos-core-protobuf-grpc-nb-proto",
+#    grpc_proto_lib = ":Services_proto",
+#    proto_libs = PROTO_LIBS,
+#)
 
 osgi_proto_jar(
     name = "onos-core-protobuf-models-proto",
@@ -81,9 +85,9 @@ proto_library(
     srcs = ["net/ServicesProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
     deps = [
+        ":LinkEvent_proto",
         ":OutboundPacket_proto",
         ":PacketContext_proto",
-        ":LinkEvent_proto",
     ],
 )
 

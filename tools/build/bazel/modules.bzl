@@ -75,7 +75,7 @@ CORE = UTILS + API + [
     "//web/gui:onos-gui",
     "//core/protobuf/models/proto:onos-core-protobuf-models-proto",
     "//core/protobuf/models:onos-core-protobuf-models",
-    "//core/protobuf/models/proto:onos-core-protobuf-services-proto",
+    #"//core/protobuf/models/proto:onos-core-protobuf-services-proto",
 ]
 
 ONOS_DRIVERS = [
@@ -145,6 +145,7 @@ ONOS_PROVIDERS = [
 ONOS_APPS = [
     # Apps
     "//apps/grpc-nb:onos-apps-grpc-nb-oar",
+    "//apps/grpc-integration:onos-apps-grpc-integration-oar",
     "//apps/dhcp:onos-apps-dhcp-oar",
     "//apps/dhcprelay:onos-apps-dhcprelay-oar",
     "//apps/fwd:onos-apps-fwd-oar",
