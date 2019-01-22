@@ -60,7 +60,7 @@ public final class OutboundPacketProtoTranslator {
             switch (instructionProto.getType())
             {
                 case OUTPUT:
-                    trafficTreatmentBuilder.setOutput(PortNumber.portNumber(instructionProto.getPort().getPortNumber()));
+                    trafficTreatmentBuilder.setOutput(PortNumber.portNumber(instructionProto.getOutput().getPort().getPortNumber()));
             }
         }
 

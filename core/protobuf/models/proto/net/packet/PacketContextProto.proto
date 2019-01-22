@@ -21,11 +21,6 @@ package net.packet;
 import "core/protobuf/models/proto/net/packet/OutboundPacketProto.proto";
 import "core/protobuf/models/proto/net/packet/InboundPacketProto.proto";
 
-
-
-
-
-
 // Corresponds to org.onosproject.net.packet.PacketContext.
 message PacketContextProto {
     net.packet.InboundPacketProto inboundPacket = 1;

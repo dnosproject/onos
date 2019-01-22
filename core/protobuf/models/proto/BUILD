@@ -211,13 +211,16 @@ proto_library(
     name = "Instruction_proto",
     srcs = ["net/flow/instructions/InstructionProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
-    deps = [":Port_proto"],
+    deps = [
+        ":OutputInstruction_proto"
+    ]
 )
 
 proto_library(
     name = "Instructions_proto",
     srcs = ["net/flow/instructions/InstructionsProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
+
 )
 
 proto_library(
@@ -225,7 +228,7 @@ proto_library(
     srcs = ["net/flow/instructions/OutputInstructionProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
     deps = [
-        ":Instruction_proto",
+        #":Instruction_proto",
         ":Port_proto",
     ],
 )

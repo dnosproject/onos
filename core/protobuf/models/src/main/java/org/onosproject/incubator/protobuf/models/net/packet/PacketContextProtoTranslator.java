@@ -19,9 +19,6 @@ package org.onosproject.incubator.protobuf.models.net.packet;
 import org.onosproject.grpc.net.packet.models.InboundPacketProtoOuterClass;
 import org.onosproject.grpc.net.packet.models.OutboundPacketProtoOuterClass;
 import org.onosproject.grpc.net.packet.models.PacketContextProtoOuterClass.PacketContextProto;
-import org.onosproject.net.packet.DefaultOutboundPacket;
-import org.onosproject.net.packet.DefaultPacketContext;
-import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketContext;
 
 /**

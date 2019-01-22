@@ -38,10 +38,7 @@ import org.onosproject.grpc.net.models.EventNotificationGrpc.EventNotificationIm
 import org.onosproject.grpcintegration.api.EventNotficationService;
 import org.slf4j.Logger;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -57,6 +54,7 @@ public class EventNotificationManager
 
     protected static Map<String, StreamObserver<ServicesProto.Notification>> observerMap = new HashMap<>();
     protected static Set<String> clientList = new HashSet<>();
+    protected static Map<String, List<String>> clientKeyMap = new HashMap<>();
     ExecutorService executorService = Executors.newFixedThreadPool(1);
 
 
@@ -87,11 +85,11 @@ public class EventNotificationManager
             ServicesProto.RegistrationRequest registrationRequest,
             StreamObserver<ServicesProto.RegistrationResponse> observer) {
 
-        log.info("registration request has been recevied");
+        log.info("Registration request has been recevied");
         ServicesProto.RegistrationResponse registrationResponse =
                 ServicesProto.RegistrationResponse.newBuilder()
                         .setClientId(registrationRequest.getClientId())
-                        .setServerId("grpc-nb")
+                        .setServerId("grpc-integration")
                         .build();
 
         clientList.add(registrationRequest.getClientId());
