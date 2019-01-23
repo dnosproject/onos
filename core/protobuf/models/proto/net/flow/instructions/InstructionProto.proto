@@ -41,7 +41,6 @@ enum TypeProto {
 message InstructionProto {
     TypeProto type = 1;
     oneof instructions {
-    //    //PortProto port = 2;
         OutputInstructionProto output = 2;
 
     }

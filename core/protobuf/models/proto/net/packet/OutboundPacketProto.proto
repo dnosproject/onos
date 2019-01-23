@@ -20,9 +20,6 @@ package net.packet;
 
 import "core/protobuf/models/proto/net/flow/TrafficTreatmentProto.proto";
 
-
-
-
 // Corresponds to org.onosproject.net.packet.OutboundPacket.
 message OutboundPacketProto {
     string device_id = 1;

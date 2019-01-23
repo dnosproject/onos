@@ -60,14 +60,17 @@ public class PacketOutManager
     }
 
     @Override
-    public void emit(OutboundPacketProtoOuterClass.OutboundPacketProto request, StreamObserver<ServicesProto.PacketOutStatus> responseObserver) {
+    public void emit(OutboundPacketProtoOuterClass.OutboundPacketProto request,
+                     StreamObserver<ServicesProto.PacketOutStatus> responseObserver) {
 
         OutboundPacket outboundPacket = OutboundPacketProtoTranslator.translate(request);
 
         packetService = DefaultServiceDirectory.getService(PacketService.class);
         packetService.emit(outboundPacket);
 
-        ServicesProto.PacketOutStatus reply = ServicesProto.PacketOutStatus.newBuilder().setStat(true).build();
+        ServicesProto.PacketOutStatus reply = ServicesProto.PacketOutStatus
+                .newBuilder()
+                .setStat(true).build();
         responseObserver.onNext(reply);
         responseObserver.onCompleted();
     }

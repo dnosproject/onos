@@ -54,6 +54,7 @@ public final class FlowRuleProtoTranslator {
                     .setTableId(flowRule.tableId())
                     .setTableName(flowRule.table().toString());
 
+
             // TODO: need to set TrafficTreatment and TrafficSelector
 
             return builder.build();
