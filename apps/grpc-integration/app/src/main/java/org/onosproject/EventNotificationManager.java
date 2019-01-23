@@ -44,6 +44,9 @@ import java.util.concurrent.Executors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * Implements EventNotificiation gRPC service.
+ */
 @Component(immediate = true, service = EventNotficationService.class)
 public class EventNotificationManager
         extends EventNotificationImplBase
@@ -100,7 +103,8 @@ public class EventNotificationManager
 
 
     @Override
-    public void onEvent(ServicesProto.Topic topic, StreamObserver<ServicesProto.Notification> observer) {
+    public void onEvent(ServicesProto.Topic topic,
+                        StreamObserver<ServicesProto.Notification> observer) {
 
         observerMap.put(topic.getClientId() + topic.getType(), observer);
         log.info("The client " + topic.getClientId()
@@ -165,7 +169,4 @@ public class EventNotificationManager
 
         }
     }
-
-
-
 }

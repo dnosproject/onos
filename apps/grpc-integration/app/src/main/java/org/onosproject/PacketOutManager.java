@@ -35,6 +35,9 @@ import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * Implements PacketOut gRPC Service.
+ */
 @Component(immediate = true, service = PacketOutService.class)
 public class PacketOutManager
         extends PacketOutServiceImplBase

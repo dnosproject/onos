@@ -37,7 +37,9 @@ import java.util.Dictionary;
 import static org.onosproject.grpcintegration.app.OsgiPropertyConstants.GRPC_PORT;
 import static org.onosproject.grpcintegration.app.OsgiPropertyConstants.GRPC_PORT_DEFAULT;
 
-
+/**
+ * Implements gRPC server manager.
+ */
 @Component(immediate = true,
         service = GrpcServer.class,
         property = {GRPC_PORT + ":Integer=" + GRPC_PORT_DEFAULT})
