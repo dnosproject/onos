@@ -144,8 +144,8 @@ ONOS_PROVIDERS = [
 
 ONOS_APPS = [
     # Apps
-    "//apps/grpc-nb:onos-apps-grpc-nb-oar",
-    "//apps/grpc-integration:onos-apps-grpc-integration-oar",
+    #"//apps/grpc-nb:onos-apps-grpc-nb-oar",
+    #"//apps/grpc-integration:onos-apps-grpc-integration-oar",
     "//apps/dhcp:onos-apps-dhcp-oar",
     "//apps/dhcprelay:onos-apps-dhcprelay-oar",
     "//apps/fwd:onos-apps-fwd-oar",

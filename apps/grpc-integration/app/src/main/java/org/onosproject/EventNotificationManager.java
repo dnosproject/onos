@@ -54,7 +54,7 @@ import java.util.concurrent.Executors;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * Implements EventNotificiation gRPC service.
+ * Implements Event Notificiation gRPC service.
  */
 @Component(immediate = true, service = EventNotficationService.class)
 public class EventNotificationManager
