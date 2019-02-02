@@ -14,20 +14,13 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.cluster.models";
 
-package net.flow.instructions;
+import "cluster/NodeIdProto.proto";
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+package cluster;
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
-}
-
-message OutputInstructionProto {
-    PortProto port = 1;
-
+message RoleInfoProto {
+    cluster.NodeIdProto master = 1;
+    repeated cluster.NodeIdProto backups = 2;
 }

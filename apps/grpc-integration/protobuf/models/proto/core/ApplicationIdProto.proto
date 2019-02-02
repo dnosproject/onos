@@ -14,20 +14,12 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.core.models";
 
-package net.flow.instructions;
+package core;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
-
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
-}
-
-message OutputInstructionProto {
-    PortProto port = 1;
-
+// Corresponds to org.onosproject.core.ApplicationId.
+message ApplicationIdProto {
+    uint32 id = 1;
+    string name = 2;
 }

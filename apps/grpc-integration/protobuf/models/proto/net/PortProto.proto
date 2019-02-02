@@ -14,20 +14,18 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.net.models";
 
-package net.flow.instructions;
+package net;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/device/PortEnumsProto.proto";
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
+// Corresponds to org.onosproject.net.Port.
+message PortProto {
+    string port_number = 1;
+    bool is_enabled = 2;
+    net.device.PortTypeProto type = 3;
+    int64 port_speed = 4;
+    map<string, string> annotations = 5;
 }
 
-message OutputInstructionProto {
-    PortProto port = 1;
-
-}

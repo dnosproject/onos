@@ -2,7 +2,7 @@ load("//tools/build/bazel:osgi_java_library.bzl", "osgi_proto_jar")
 load("//tools/build/bazel:osgi_java_library.bzl", "osgi_jar")
 load("@io_grpc_grpc_java//:java_grpc_library.bzl", "java_grpc_library")
 
-PROTO_SOURCE_ROOT = "core/protobuf/models/proto"
+PROTO_SOURCE_ROOT = "apps/grpc-integration/protobuf/models/proto"
 
 PROTO_LIBS = [
     ":ApplicationsEnums_proto",
@@ -72,7 +72,7 @@ PROTO_LIBS = [
 #)
 
 osgi_proto_jar(
-    name = "onos-core-protobuf-models-proto",
+    name = "onos-apps-grpc-integration-protobuf-models-proto",
     grpc_proto_lib = ":Services_proto",
     proto_libs = PROTO_LIBS,
 )
@@ -217,7 +217,6 @@ proto_library(
     name = "Instructions_proto",
     srcs = ["net/flow/instructions/InstructionsProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
-
 )
 
 proto_library(

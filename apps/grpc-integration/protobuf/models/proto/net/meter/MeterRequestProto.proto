@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.net.meter.models";
 
-package net.flow.instructions;
+package net.meter;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+import "net/meter/BandProto.proto";
+import "net/meter/MeterEnumsProto.proto";
+import "core/ApplicationIdProto.proto";
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
-}
-
-message OutputInstructionProto {
-    PortProto port = 1;
-
+message MeterRequestProto {
+    string device_id = 1;
+    core.ApplicationIdProto application_id = 2;
+    MeterUnitProto unit = 3;
+    bool is_burst = 4;
+    repeated BandProto bands = 5;
+    MeterRequestTypeProto type = 6;
 }

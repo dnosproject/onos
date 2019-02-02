@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.net.models";
 
-package net.flow.instructions;
+package net;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/link/LinkEnumsProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/ConnectPointProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/ProviderIdProto.proto";
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
-}
-
-message OutputInstructionProto {
-    PortProto port = 1;
-
+// Corresponds to org.onosproject.net.Link.
+message LinkProto {
+    net.link.LinkStateProto state = 1;
+    net.ConnectPointProto src = 2;
+    net.ConnectPointProto dst = 3;
+    net.link.LinkTypeProto type = 4;
+    map<string, string> annotations = 5;
+    net.ProviderIdProto provider_id = 6;
+    bool isExpected = 7;
 }

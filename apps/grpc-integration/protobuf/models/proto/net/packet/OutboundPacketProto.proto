@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.net.packet.models";
 
-package net.flow.instructions;
+package net.packet;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/flow/TrafficTreatmentProto.proto";
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
-
-    }
+// Corresponds to org.onosproject.net.packet.OutboundPacket.
+message OutboundPacketProto {
+    string device_id = 1;
+    net.flow.TrafficTreatmentProto treatment = 2;
+    bytes data = 3;
 }
 
-message OutputInstructionProto {
-    PortProto port = 1;
-
-}

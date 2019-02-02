@@ -14,20 +14,21 @@
  * limitations under the License.
  */
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.flow.instructions.models";
+option java_package = "org.onosproject.grpc.net.flow.models";
 
-package net.flow.instructions;
+package net.flow;
 
-import "core/protobuf/models/proto/net/PortProto.proto";
+import "net/flow/FlowEntryEnumsProto.proto";
 
-message InstructionProto {
-    oneof instruction {
-        OutputInstructionProto output = 1;
+// Corresponds to org.onosproject.net.flow.DefaultFlowEntry.
+message FlowEntryProto {
+    int64 life = 1;
+    int64 packets = 2;
+    int64 bytes = 3;
+    int64 last_seen = 4;
+    int32 err_type = 5;
+    int32 err_code = 6;
 
-    }
-}
-
-message OutputInstructionProto {
-    PortProto port = 1;
-
+    net.flow.FlowEntryStateProto state = 7;
+    net.flow.FlowLiveTypeProto live_type = 8;
 }
