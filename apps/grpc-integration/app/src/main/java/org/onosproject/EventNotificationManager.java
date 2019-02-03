@@ -18,15 +18,18 @@ package org.onosproject.grpcintegration.app;
 
 
 import io.grpc.stub.StreamObserver;
-import org.onosproject.grpc.net.link.models.LinkEventProto;
+import org.onosproject.grpc.net.link.models.LinkEventProto.LinkNotificationProto;
 import org.onosproject.grpc.net.models.ServicesProto.Notification;
 import org.onosproject.grpc.net.models.ServicesProto.RegistrationRequest;
 import org.onosproject.grpc.net.models.ServicesProto.RegistrationResponse;
 import org.onosproject.grpc.net.models.ServicesProto.Topic;
 import org.onosproject.grpc.net.models.ServicesProto.topicType;
-import org.onosproject.grpc.net.packet.models.PacketContextProtoOuterClass;
+import org.onosproject.grpc.net.packet.models.PacketContextProtoOuterClass.PacketContextProto;
 import org.onosproject.incubator.protobuf.models.net.link.LinkNotificationProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.packet.PacketContextProtoTranslator;
+import org.onosproject.net.device.DeviceEvent;
+import org.onosproject.net.device.DeviceListener;
+import org.onosproject.net.device.DeviceService;
 import org.onosproject.net.link.LinkEvent;
 import org.onosproject.net.link.LinkListener;
 import org.onosproject.net.link.LinkService;
@@ -43,11 +46,7 @@ import org.onosproject.grpcintegration.api.EventNotficationService;
 import org.slf4j.Logger;
 
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
+import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -68,15 +67,23 @@ public class EventNotificationManager
             observerMap = new HashMap<>();
     protected static Set<String> clientList = new HashSet<>();
     protected static Map<String, List<String>> clientKeyMap = new HashMap<>();
-    ExecutorService executorService = Executors.newFixedThreadPool(1);
+    protected static List<List<StreamObserver<Notification>>> streamObserverList =
+            new ArrayList<>();
 
+    ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     private final InternalPacketProcessor packetListener = new InternalPacketProcessor();
     private final LinkListener linkListener = new InternalLinkListener();
+    private final DeviceListener deviceListener = new InternalDeviceListener();
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected PacketService packetService;
+
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected LinkService linkService;
+
+    @Reference(cardinality = ReferenceCardinality.MANDATORY)
+    protected DeviceService deviceService;
 
     @Activate
     protected void activate() {
@@ -84,6 +91,7 @@ public class EventNotificationManager
         log.info("Event Notification Service has been activated");
         packetService.addProcessor(packetListener, PacketProcessor.director(11));
         linkService.addListener(linkListener);
+        deviceService.addListener(deviceListener);
     }
 
     @Deactivate
@@ -91,6 +99,7 @@ public class EventNotificationManager
         log.info("Packet Event Service has been deactivated");
         packetService.removeProcessor(packetListener);
         linkService.removeListener(linkListener);
+        deviceService.removeListener(deviceListener);
     }
 
     @Override
@@ -122,6 +131,8 @@ public class EventNotificationManager
 
     }
 
+
+
     class InternalPacketProcessor implements PacketProcessor {
 
         @Override
@@ -132,7 +143,7 @@ public class EventNotificationManager
                 return;
             }
 
-            PacketContextProtoOuterClass.PacketContextProto packetContextProto =
+            PacketContextProto packetContextProto =
                     PacketContextProtoTranslator.translate(context);
 
             for (String clientId : clientList) {
@@ -153,12 +164,21 @@ public class EventNotificationManager
             }
         }
     }
+
+    private class InternalDeviceListener implements DeviceListener {
+
+        @Override
+        public void event(DeviceEvent event) {
+
+        }
+    }
+
     private class InternalLinkListener implements LinkListener {
 
         @Override
         public void event(LinkEvent event) {
 
-            LinkEventProto.LinkNotificationProto linkNotificationProto =
+            LinkNotificationProto linkNotificationProto =
                     LinkNotificationProtoTranslator.translate(event);
 
             for (String clientId : clientList) {
