@@ -63,8 +63,6 @@ public class PacketOutManager
     public void emit(OutboundPacketProtoOuterClass.OutboundPacketProto request,
                      StreamObserver<ServicesProto.PacketOutStatus> responseObserver) {
 
-
-        log.info("Packet out is called");
         OutboundPacket outboundPacket = OutboundPacketProtoTranslator.translate(request);
 
         packetService = DefaultServiceDirectory.getService(PacketService.class);
