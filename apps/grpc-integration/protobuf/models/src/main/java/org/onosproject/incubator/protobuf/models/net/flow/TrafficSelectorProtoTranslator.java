@@ -51,11 +51,11 @@ public final class TrafficSelectorProtoTranslator {
 
                 case ETH_SRC:
                     builder.matchEthSrc(MacAddress.valueOf(criterionProto
-                            .getEthCriterion().getMacAddress().toString()));
+                            .getEthCriterion().getMacAddress()));
                     break;
                 case ETH_DST:
                     builder.matchEthDst(MacAddress.valueOf(criterionProto
-                           .getEthCriterion().getMacAddress().toString()));
+                           .getEthCriterion().getMacAddress()));
                 case ETH_TYPE:
                     builder.matchEthType((short) criterionProto
                             .getEthTypeCriterion().getEthType());
