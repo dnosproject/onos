@@ -16,63 +16,74 @@
 
 package org.onosproject.grpcintegration.app;
 
-import io.grpc.stub.StreamObserver;
+
+
 import org.onlab.osgi.DefaultServiceDirectory;
-import org.onosproject.grpc.net.models.ServicesProto.PacketOutStatus;
-import org.onosproject.grpc.net.packet.models.OutboundPacketProtoOuterClass;
-import org.onosproject.incubator.protobuf.models.net.packet.OutboundPacketProtoTranslator;
-import org.onosproject.net.packet.OutboundPacket;
-import org.onosproject.net.packet.PacketService;
+import io.grpc.stub.StreamObserver;
+import org.onosproject.grpc.net.flow.models.FlowRuleProto;
+import org.onosproject.grpc.net.models.FlowServiceGrpc.FlowServiceImplBase;
+import org.onosproject.grpc.net.models.ServicesProto.FlowServiceStatus;
+import org.onosproject.grpcintegration.api.FlowService;
+import org.onosproject.incubator.protobuf.models.net.flow.FlowRuleProtoTranslator;
+import org.onosproject.net.flow.FlowRule;
+import org.onosproject.net.flow.FlowRuleService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.Reference;
-
-import org.onosproject.grpc.net.models.PacketOutServiceGrpc.PacketOutServiceImplBase;
-import org.onosproject.grpcintegration.api.PacketOutService;
 import org.slf4j.Logger;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- * Implements PacketOut gRPC Service.
+ * Implements Flow gRPC service.
  */
-@Component(immediate = true, service = PacketOutService.class)
-public class PacketOutManager
-        extends PacketOutServiceImplBase
-        implements PacketOutService {
+@Component(immediate = true, service = FlowService.class)
+public class FlowServiceManager
+        extends FlowServiceImplBase
+        implements FlowService {
 
     private final Logger log = getLogger(getClass());
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
-    protected PacketService packetService;
+    protected FlowRuleService flowRuleService;
 
     @Activate
     protected void activate() {
 
-        log.info("Packetout Service has been activated");
+        log.info("Flow Service has been activated");
+
+
     }
 
     @Deactivate
     protected void deactivate() {
-        log.info("deactivated");
+        log.info("Flow Service has been deactivated");
     }
 
     @Override
-    public void emit(OutboundPacketProtoOuterClass.OutboundPacketProto request,
-                     StreamObserver<PacketOutStatus> responseObserver) {
+    public void addFlow (FlowRuleProto flowRuleRequest
+            ,StreamObserver<FlowServiceStatus> responseObserver) {
 
-        OutboundPacket outboundPacket = OutboundPacketProtoTranslator.translate(request);
+        flowRuleService = DefaultServiceDirectory.getService(FlowRuleService.class);
+        FlowRule flowRule = FlowRuleProtoTranslator.translate(flowRuleRequest);
+        flowRuleService.applyFlowRules(flowRule);
 
-        packetService = DefaultServiceDirectory.getService(PacketService.class);
-        packetService.emit(outboundPacket);
-
-        PacketOutStatus reply = PacketOutStatus
+        FlowServiceStatus flowServiceStatus = FlowServiceStatus
                 .newBuilder()
-                .setStat(true).build();
-        responseObserver.onNext(reply);
+                .setStat(true)
+                .build();
+        responseObserver.onNext(flowServiceStatus);
         responseObserver.onCompleted();
+
+
+
+
     }
+
+
+
+
 
 }

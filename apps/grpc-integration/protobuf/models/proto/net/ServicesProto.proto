@@ -1,17 +1,26 @@
 syntax = "proto3";
 option java_package = "org.onosproject.grpc.net.models";
 
-package net.packet;
+package net;
 
 import "apps/grpc-integration/protobuf/models/proto/net/packet/OutboundPacketProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/packet/PacketContextProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/link/LinkEventProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/flow/FlowRuleProto.proto";
 
 service PacketOutService {
-    rpc emit (OutboundPacketProto) returns (PacketOutStatus);
+    rpc emit (net.packet.OutboundPacketProto) returns (PacketOutStatus);
+}
+
+service FlowService {
+    rpc addFlow (net.flow.FlowRuleProto) returns (FlowServiceStatus);
 }
 
 message PacketOutStatus {
+    bool stat = 1;
+}
+
+message FlowServiceStatus {
     bool stat = 1;
 }
 
@@ -48,7 +57,7 @@ message Notification {
     string serverId = 2;
     topicType type = 3;
     oneof event {
-        PacketContextProto packetContext = 4;
+        net.packet.PacketContextProto packetContext = 4;
         net.link.LinkNotificationProto linkEvent = 5;
 
     }

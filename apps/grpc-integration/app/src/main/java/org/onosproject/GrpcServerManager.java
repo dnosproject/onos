@@ -96,6 +96,7 @@ public class GrpcServerManager implements GrpcServer {
                     NettyServerBuilder.forPort(grpcPort)
                             .addService(new PacketOutManager())
                             .addService(new EventNotificationManager())
+                            .addService(new FlowServiceManager())
                             .build()
                             .start();
         }

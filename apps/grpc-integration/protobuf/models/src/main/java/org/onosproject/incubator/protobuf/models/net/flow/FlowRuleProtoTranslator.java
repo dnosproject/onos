@@ -15,18 +15,14 @@
  */
 package org.onosproject.incubator.protobuf.models.net.flow;
 
-import org.onosproject.grpc.net.flow.criteria.models.CriterionProtoOuterClass.CriterionProto;
+
+import org.onosproject.grpc.net.flow.criteria.models.CriterionProtoOuterClass;
 import org.onosproject.grpc.net.flow.models.FlowRuleProto;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.flow.DefaultFlowRule;
-import org.onosproject.net.flow.DefaultTrafficSelector;
 import org.onosproject.net.flow.FlowRule;
-import org.onosproject.net.flow.TrafficSelector;
-import org.onosproject.net.flow.criteria.Criterion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 /**
  * gRPC FlowRuleProto message to equivalent ONOS FlowRule conversion related utilities.
@@ -54,7 +50,6 @@ public final class FlowRuleProtoTranslator {
                     .setTableId(flowRule.tableId())
                     .setTableName(flowRule.table().toString());
 
-
             // TODO: need to set TrafficTreatment and TrafficSelector
 
             return builder.build();
@@ -74,7 +69,16 @@ public final class FlowRuleProtoTranslator {
             return null;
         }
 
+        log.info(String.valueOf(flowRule.getSelector().getCriterionCount()));
+
+        for(CriterionProtoOuterClass.CriterionProto criterionProto: flowRule.getSelector().getCriterionList()) {
+
+             log.info("name:" + criterionProto.getType().name());
+
+        }
+
         DeviceId deviceId = DeviceId.deviceId(flowRule.getDeviceId());
+
 
         // TODO: to register AppId need to find a way to get CoreService
 
@@ -86,6 +90,10 @@ public final class FlowRuleProtoTranslator {
         resultBuilder.forTable(flowRule.getTableId());
         resultBuilder.withPriority(flowRule.getPriority());
         resultBuilder.withCookie(flowRule.getFlowId());
+        resultBuilder.withSelector(TrafficSelectorProtoTranslator
+                .translate(flowRule.getSelector()));
+        resultBuilder.withTreatment(TrafficTreatmentProtoTranslator
+                .translate(flowRule.getTreatment()));
         resultBuilder.withReason(reason);
 
         if (flowRule.getPermanent()) {
@@ -95,19 +103,6 @@ public final class FlowRuleProtoTranslator {
         }
 
         // TODO: need to deal with TrafficTreatment and TrafficSelector
-
-        List<CriterionProto> criterionList =  flowRule.getSelector().getCriterionList();
-        TrafficSelector trafficSelector;
-
-        for(CriterionProto criterionProto: criterionList)
-        {
-            switch (criterionProto.getType())
-            {
-                case ETH_SRC:
-
-
-            }
-        }
 
         return resultBuilder.build();
     }

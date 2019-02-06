@@ -20,14 +20,24 @@ package net.flow.instructions;
 
 import "apps/grpc-integration/protobuf/models/proto/net/PortProto.proto";
 
+
 message InstructionProto {
     oneof instruction {
         OutputInstructionProto output = 1;
-
+        NoActionInstructionProto noAction = 2;
+        TableTypeTransition tableTypeTransition = 3;
     }
 }
-
+// Corresponds to org.onosproject.net.flow.instructions.Instructions.OutputInstruction
 message OutputInstructionProto {
     PortProto port = 1;
+}
 
+// Corresponds to org.onosproject.net.flow.instructions.Instructions.NoActionInstruction
+message NoActionInstructionProto {
+
+}
+// Corresponds to org.onosproject.net.flow.instructions.Instructions.TableTypeTransition
+message TableTypeTransition {
+    int32 tableId = 1;
 }

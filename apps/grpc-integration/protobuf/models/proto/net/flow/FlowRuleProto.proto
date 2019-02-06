@@ -24,10 +24,6 @@ import  "apps/grpc-integration/protobuf/models/proto/net/flow/TrafficSelectorPro
 import  "apps/grpc-integration/protobuf/models/proto/net/flow/TrafficTreatmentProto.proto";
 import  "apps/grpc-integration/protobuf/models/proto/net/flow/FlowRuleEnumsProto.proto";
 
-service FlowService {
-    rpc addFlow (FlowRuleProto) returns (Status);
-}
-
 // Corresponds to org.onosproject.net.flow.DefaultFlowRule.
 message FlowRuleProto {
     int32 priority = 1;
@@ -44,6 +40,3 @@ message FlowRuleProto {
     net.flow.FlowRemoveReasonProto reason = 11;
 }
 
-message Status {
-    bool stat = 1;
-}

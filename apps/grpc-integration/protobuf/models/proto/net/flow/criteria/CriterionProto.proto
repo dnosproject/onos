@@ -83,6 +83,24 @@ enum TypeProto {
     DUMMY = 61;
 }
 
+// Corresponds to org.onosproject.net.flow.criteria.
 message CriterionProto {
     TypeProto type = 1;
+    oneof criterion {
+        EthCriterionProto ethCriterion = 2;
+        EthTypeCriterionProto ethTypeCriterion = 3;
+    }
 }
+
+// Corresponds to org.onosproject.net.flow.criteria.EthCriterion.
+message EthCriterionProto {
+    string macAddress = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.EthTypeCriterion.
+message EthTypeCriterionProto {
+    int32 ethType = 1;
+}
+
+
+

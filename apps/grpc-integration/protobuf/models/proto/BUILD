@@ -87,6 +87,7 @@ proto_library(
         ":LinkEvent_proto",
         ":OutboundPacket_proto",
         ":PacketContext_proto",
+        ":FlowRule_proto",
     ],
 )
 
