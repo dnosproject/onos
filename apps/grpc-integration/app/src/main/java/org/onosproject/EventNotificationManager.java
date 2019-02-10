@@ -131,8 +131,6 @@ public class EventNotificationManager
 
     }
 
-
-
     class InternalPacketProcessor implements PacketProcessor {
 
         @Override

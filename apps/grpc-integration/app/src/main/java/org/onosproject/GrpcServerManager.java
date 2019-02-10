@@ -97,6 +97,7 @@ public class GrpcServerManager implements GrpcServer {
                             .addService(new PacketOutManager())
                             .addService(new EventNotificationManager())
                             .addService(new FlowServiceManager())
+                            .addService(new TopologyServiceManager())
                             .build()
                             .start();
         }

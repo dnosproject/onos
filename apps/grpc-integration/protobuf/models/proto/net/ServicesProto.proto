@@ -7,13 +7,36 @@ import "apps/grpc-integration/protobuf/models/proto/net/packet/OutboundPacketPro
 import "apps/grpc-integration/protobuf/models/proto/net/packet/PacketContextProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/link/LinkEventProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/flow/FlowRuleProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyGraphProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/ClusterIdProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyClusterProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/PathProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/DeviceProto.proto";
 
+
+// Corresponds to PacketOut service
 service PacketOutService {
     rpc emit (net.packet.OutboundPacketProto) returns (PacketOutStatus);
 }
 
+// Corresponds to FlowRule service
 service FlowService {
     rpc addFlow (net.flow.FlowRuleProto) returns (FlowServiceStatus);
+}
+
+// Corresponds to Topology service
+service TopoService {
+    rpc getGraph (Empty) returns (net.topology.TopologyGraphProto);
+    rpc currentTopology (Empty) returns (net.topology.TopologyProto);
+    rpc getPaths (getPathRequest) returns (Paths);
+}
+
+// Corresponds to EventNotification service
+service EventNotification {
+    rpc register (RegistrationRequest) returns (RegistrationResponse);
+    rpc onEvent (Topic) returns (stream Notification);
+
 }
 
 message PacketOutStatus {
@@ -25,12 +48,29 @@ message FlowServiceStatus {
 }
 
 
-service EventNotification {
-    rpc register (RegistrationRequest) returns (RegistrationResponse);
-    rpc onEvent (Topic) returns (stream Notification);
+message Empty {
 
 }
 
+message Paths {
+    repeated net.PathProto paths = 1;
+}
+
+message getPathRequest {
+    net.DeviceProto srcDevice = 1;
+    net.DeviceProto dstDevice = 2;
+
+
+}
+
+message getClusterRequest {
+    net.topology.TopologyProto topologyProto = 1;
+    net.topology.ClusterIdProto clusterIdProto = 2;
+}
+
+message ClusterIdSet {
+    repeated net.topology.ClusterIdProto clusterIdProto = 1;
+}
 
 enum topicType {
     PACKET_EVENT = 0;

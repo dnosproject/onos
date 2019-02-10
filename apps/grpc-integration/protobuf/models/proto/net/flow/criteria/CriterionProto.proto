@@ -89,12 +89,25 @@ message CriterionProto {
     oneof criterion {
         EthCriterionProto ethCriterion = 2;
         EthTypeCriterionProto ethTypeCriterion = 3;
+        IPCriterionProto ipCriterion = 4;
+        IPProtocolCriterionProto ipProtocolCriterion = 5;
+        TcpPortCriterionProto tcpPortCriterion = 6;
+        UdpPortCriterionProto udpPortCriterion = 7;
+        IcmpCodeCriterionProto icmpCodeCriterion = 8;
+        IcmpTypeCriterionProto icmpTypeCriterion = 9;
+        Icmpv6CodeCriterionProto icmpv6CodeCriterion = 10;
+        Icmpv6TypeCriterionProto icmpv6TypeCriterion = 11;
+        SctpPortCriterionProto sctpPortCriterion = 12;
+        ArpHaCriterionProto arpHaCriterion = 13;
+        ArpOpCriterionProto arpOpCriterion = 14;
+        ArpPaCriterionProto arpPaCriterion = 15;
+        PortCriterionProto portCriterion = 16;
     }
 }
 
 // Corresponds to org.onosproject.net.flow.criteria.EthCriterion.
 message EthCriterionProto {
-    string macAddress = 1;
+    bytes macAddress = 1;
 }
 
 // Corresponds to org.onosproject.net.flow.criteria.EthTypeCriterion.
@@ -102,5 +115,70 @@ message EthTypeCriterionProto {
     int32 ethType = 1;
 }
 
+// Corresponds to org.onosproject.net.flow.criteria.IPCriterion
+message IPCriterionProto {
+    bytes IpPrefix = 1;
+    int32 prefixLength = 2;
+}
 
+// Corresponds to org.onosproject.net.flow.criteria.IPProtocolCriterion
+message IPProtocolCriterionProto {
+    int32 protocol = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.TcpPortCriterion
+message TcpPortCriterionProto {
+    int32 tcpPort = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.UdpPortCriterion
+message UdpPortCriterionProto {
+    int32 udpPort = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.IcmpCodeCriterion
+message IcmpCodeCriterionProto {
+    int32 icmpCode = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.IcmpTypeCriterion
+message IcmpTypeCriterionProto {
+    int32 icmpType = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.Icmpv6CodeCriterion
+message Icmpv6CodeCriterionProto {
+    int32 icmpv6Code = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.Icmpv6TypeCriterion
+message Icmpv6TypeCriterionProto {
+    int32 icmpv6Type = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.SctpPortCriterion
+message SctpPortCriterionProto {
+    int32 sctpPort = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.ArpHaCriterion
+message ArpHaCriterionProto {
+    bytes mac = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.ArpOpCriterion
+message ArpOpCriterionProto {
+    int32 arpOp = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.ArpPaCriterion
+message ArpPaCriterionProto {
+    bytes ip4Address = 1;
+}
+
+// Corresponds to org.onosproject.net.flow.criteria.PortCriterion
+message PortCriterionProto {
+    int64 port = 1;
+    string name = 2;
+}
 

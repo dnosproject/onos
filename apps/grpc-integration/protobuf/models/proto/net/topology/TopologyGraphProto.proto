@@ -13,26 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+syntax = "proto3";
+option java_package = "org.onosproject.grpc.net.topology.models";
 
-package org.onosproject.grpcintegration.app;
+package net.topology;
 
-/**
- * An enum to represent different type of ONOS events.
- */
-public enum EventType {
-    PACKET_EVENT(1),
-    LINK_EVENT(2),
-    DEVICE_EVENT(3);
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyVertexProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyEdgeProto.proto";
 
-    private int typeIndex;
-
-    EventType(int typeIndex) {
-        this.typeIndex = typeIndex;
-
-    }
-
-    public int getTypeIndex() {
-        return typeIndex;
-    }
-
+// Corresponds to org.onosproject.net.topology.TopologyGraph
+message TopologyGraphProto {
+    repeated TopologyVertexProto vertexes = 1;
+    repeated TopologyEdgeProto edges = 2;
 }

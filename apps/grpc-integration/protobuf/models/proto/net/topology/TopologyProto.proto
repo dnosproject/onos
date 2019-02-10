@@ -13,26 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+syntax = "proto3";
+option java_package = "org.onosproject.grpc.net.topology.models";
 
-package org.onosproject.grpcintegration.app;
+package net.topology;
 
-/**
- * An enum to represent different type of ONOS events.
- */
-public enum EventType {
-    PACKET_EVENT(1),
-    LINK_EVENT(2),
-    DEVICE_EVENT(3);
-
-    private int typeIndex;
-
-    EventType(int typeIndex) {
-        this.typeIndex = typeIndex;
-
-    }
-
-    public int getTypeIndex() {
-        return typeIndex;
-    }
-
+// Corresponds to org.onosproject.net.Topology
+message TopologyProto {
+    int32 clusterCount = 1;
+    int64 computeCost = 2;
+    int64 creationTime = 3;
+    int32 deviceCount = 4;
+    int32 linkCount = 5;
+    int64 time = 6;
 }

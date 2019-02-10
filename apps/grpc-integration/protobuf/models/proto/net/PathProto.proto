@@ -18,7 +18,7 @@ option java_package = "org.onosproject.grpc.net.models";
 
 package net;
 
-import "net/LinkProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/LinkProto.proto";
 
 // Corresponds to org.onosproject.net.Path.
 message PathProto {

@@ -13,26 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package org.onosproject.grpcintegration.app;
-
 /**
- * An enum to represent different type of ONOS events.
+ * Utilities to handle ProtoBuf version of ONOS topology models.
  */
-public enum EventType {
-    PACKET_EVENT(1),
-    LINK_EVENT(2),
-    DEVICE_EVENT(3);
-
-    private int typeIndex;
-
-    EventType(int typeIndex) {
-        this.typeIndex = typeIndex;
-
-    }
-
-    public int getTypeIndex() {
-        return typeIndex;
-    }
-
-}
+package org.onosproject.incubator.protobuf.models.net.topology;

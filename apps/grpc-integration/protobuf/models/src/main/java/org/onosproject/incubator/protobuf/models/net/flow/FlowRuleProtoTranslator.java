@@ -16,6 +16,9 @@
 package org.onosproject.incubator.protobuf.models.net.flow;
 
 
+import org.onlab.osgi.DefaultServiceDirectory;
+import org.onosproject.core.ApplicationId;
+import org.onosproject.core.CoreService;
 import org.onosproject.grpc.net.flow.criteria.models.CriterionProtoOuterClass;
 import org.onosproject.grpc.net.flow.models.FlowRuleProto;
 import org.onosproject.net.DeviceId;
@@ -63,33 +66,23 @@ public final class FlowRuleProtoTranslator {
      * @param flowRule gRPC message
      * @return {@link FlowRule}
      */
-    public static FlowRule translate(FlowRuleProto flowRule) {
+    public static FlowRule.Builder translate(FlowRuleProto flowRule) {
 
         if (flowRule.equals(FlowRuleProto.getDefaultInstance())) {
             return null;
         }
 
-        log.info(String.valueOf(flowRule.getSelector().getCriterionCount()));
-
-        for(CriterionProtoOuterClass.CriterionProto criterionProto: flowRule.getSelector().getCriterionList()) {
-
-             log.info("name:" + criterionProto.getType().name());
-
-        }
-
         DeviceId deviceId = DeviceId.deviceId(flowRule.getDeviceId());
-
-
-        // TODO: to register AppId need to find a way to get CoreService
 
         FlowRule.FlowRemoveReason reason =
                 FlowRuleEnumsProtoTranslator.translate(flowRule.getReason()).get();
 
         FlowRule.Builder resultBuilder = new DefaultFlowRule.Builder();
+
         resultBuilder.forDevice(deviceId);
         resultBuilder.forTable(flowRule.getTableId());
         resultBuilder.withPriority(flowRule.getPriority());
-        resultBuilder.withCookie(flowRule.getFlowId());
+        //resultBuilder.withCookie(flowRule.getFlowId());
         resultBuilder.withSelector(TrafficSelectorProtoTranslator
                 .translate(flowRule.getSelector()));
         resultBuilder.withTreatment(TrafficTreatmentProtoTranslator
@@ -102,9 +95,7 @@ public final class FlowRuleProtoTranslator {
             resultBuilder.makeTemporary(flowRule.getTimeout());
         }
 
-        // TODO: need to deal with TrafficTreatment and TrafficSelector
-
-        return resultBuilder.build();
+        return resultBuilder;
     }
 
     // Utility class not intended for instantiation.

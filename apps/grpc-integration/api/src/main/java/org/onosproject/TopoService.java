@@ -14,25 +14,7 @@
  * limitations under the License.
  */
 
-package org.onosproject.grpcintegration.app;
+package org.onosproject.grpcintegration.api;
 
-/**
- * An enum to represent different type of ONOS events.
- */
-public enum EventType {
-    PACKET_EVENT(1),
-    LINK_EVENT(2),
-    DEVICE_EVENT(3);
-
-    private int typeIndex;
-
-    EventType(int typeIndex) {
-        this.typeIndex = typeIndex;
-
-    }
-
-    public int getTypeIndex() {
-        return typeIndex;
-    }
-
+public interface TopoService {
 }
