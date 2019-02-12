@@ -17,6 +17,7 @@ package org.onosproject.incubator.protobuf.models.net.flow;
 
 
 
+import org.onosproject.core.ApplicationId;
 import org.onosproject.grpc.net.flow.models.FlowRuleProto;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.flow.DefaultFlowRule;
@@ -63,7 +64,8 @@ public final class FlowRuleProtoTranslator {
      * @param flowRule gRPC message
      * @return {@link FlowRule}
      */
-    public static FlowRule.Builder translate(FlowRuleProto flowRule) {
+    public static FlowRule translate(ApplicationId applicationId,
+                                     FlowRuleProto flowRule) {
 
         if (flowRule.equals(FlowRuleProto.getDefaultInstance())) {
             return null;
@@ -71,11 +73,13 @@ public final class FlowRuleProtoTranslator {
 
         DeviceId deviceId = DeviceId.deviceId(flowRule.getDeviceId());
 
+
         FlowRule.FlowRemoveReason reason =
                 FlowRuleEnumsProtoTranslator.translate(flowRule.getReason()).get();
 
         FlowRule.Builder resultBuilder = new DefaultFlowRule.Builder();
 
+        resultBuilder.fromApp(applicationId);
         resultBuilder.forDevice(deviceId);
         resultBuilder.forTable(flowRule.getTableId());
         resultBuilder.withPriority(flowRule.getPriority());
@@ -91,7 +95,7 @@ public final class FlowRuleProtoTranslator {
             resultBuilder.makeTemporary(flowRule.getTimeout());
         }
 
-        return resultBuilder;
+        return resultBuilder.build();
     }
 
     // Utility class not intended for instantiation.

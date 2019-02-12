@@ -70,14 +70,19 @@ public class FlowServiceManager
 
     flowRuleService = DefaultServiceDirectory.getService(FlowRuleService.class);
     coreService = DefaultServiceDirectory.getService(CoreService.class);
-    FlowRule.Builder flowRule = FlowRuleProtoTranslator.translate(flowRuleRequest);
+    FlowRule flowRule = null;
+
     if (flowRuleRequest.getAppName() != null) {
       ApplicationId applicationId = coreService.registerApplication(flowRuleRequest.getAppName());
-      flowRule.fromApp(applicationId);
+      flowRule = FlowRuleProtoTranslator.translate(applicationId,flowRuleRequest);
     }
 
+    if(flowRule == null) {
+        log.error("Format of flow rule is not correct");
+        return;
+    }
 
-    flowRuleService.applyFlowRules(flowRule.build());
+    flowRuleService.applyFlowRules(flowRule);
 
     FlowServiceStatus flowServiceStatus = FlowServiceStatus
             .newBuilder().setStat(true).build();
@@ -90,19 +95,24 @@ public class FlowServiceManager
                          StreamObserver<FlowServiceStatus> responseObserver)  {
       flowRuleService = DefaultServiceDirectory.getService(FlowRuleService.class);
 
-      FlowRule.Builder flowRule = FlowRuleProtoTranslator.translate(flowRuleRequest);
+      FlowRule flowRule = null;
+
       if (flowRuleRequest.getAppName() != null) {
-          ApplicationId applicationId = coreService.registerApplication(flowRuleRequest.getAppName());
-          flowRule.fromApp(applicationId);
+          ApplicationId applicationId = coreService
+                  .registerApplication(flowRuleRequest.getAppName());
+          flowRule = FlowRuleProtoTranslator.translate(applicationId,flowRuleRequest);
       }
 
-      flowRuleService.removeFlowRules(flowRule.build());
+      if(flowRule == null) {
+        log.error("Format of flow rule is not correct");
+        return;
+      }
 
+      flowRuleService.removeFlowRules(flowRule);
       FlowServiceStatus flowServiceStatus = FlowServiceStatus
               .newBuilder().setStat(true).build();
       responseObserver.onNext(flowServiceStatus);
       responseObserver.onCompleted();
-
 
   }
 }

@@ -63,11 +63,13 @@ public final class TopologyEdgeProtoTranslator {
         ConnectPointProto srcConnectPointProto = ConnectPointProto
                 .newBuilder()
                 .setDeviceId(topologyEdge.link().src().deviceId().toString())
+                .setPortNumber(topologyEdge.link().src().port().name())
                 .build();
 
         ConnectPointProto dstConnectPointProto = ConnectPointProto
                 .newBuilder()
                 .setDeviceId(topologyEdge.link().dst().deviceId().toString())
+                .setPortNumber(topologyEdge.link().dst().port().name())
                 .build();
 
         LinkStateProto linkStateProto = LinkStateProto
