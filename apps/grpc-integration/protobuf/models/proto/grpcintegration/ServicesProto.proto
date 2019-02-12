@@ -1,11 +1,9 @@
 syntax = "proto3";
-option java_package = "org.onosproject.grpc.net.models";
+option java_package = "org.onosproject.grpc.grpcintegration.models";
 
-package net;
+package grpcintegration;
 
 import "apps/grpc-integration/protobuf/models/proto/net/packet/OutboundPacketProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/packet/PacketContextProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/link/LinkEventProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/flow/FlowRuleProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyGraphProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyProto.proto";
@@ -13,6 +11,8 @@ import "apps/grpc-integration/protobuf/models/proto/net/topology/ClusterIdProto.
 import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyClusterProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/PathProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/DeviceProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/grpcintegration/EventNotificationProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/grpcintegration/StatusProto.proto";
 
 
 // Corresponds to PacketOut service
@@ -23,6 +23,7 @@ service PacketOutService {
 // Corresponds to FlowRule service
 service FlowService {
     rpc addFlow (net.flow.FlowRuleProto) returns (FlowServiceStatus);
+    rpc removeFlow (net.flow.FlowRuleProto) returns (FlowServiceStatus);
 }
 
 // Corresponds to Topology service
@@ -38,15 +39,6 @@ service EventNotification {
     rpc onEvent (Topic) returns (stream Notification);
 
 }
-
-message PacketOutStatus {
-    bool stat = 1;
-}
-
-message FlowServiceStatus {
-    bool stat = 1;
-}
-
 
 message Empty {
 
@@ -72,33 +64,5 @@ message ClusterIdSet {
     repeated net.topology.ClusterIdProto clusterIdProto = 1;
 }
 
-enum topicType {
-    PACKET_EVENT = 0;
-    LINK_EVENT = 1;
-}
 
 
-message RegistrationRequest {
-    string clientId = 1;
-}
-
-message RegistrationResponse {
-    string clientId = 1;
-    string serverId = 2;
-}
-
-message Topic {
-    string clientId = 1;
-    topicType type = 2;
-}
-
-message Notification {
-    string clientId = 1;
-    string serverId = 2;
-    topicType type = 3;
-    oneof event {
-        net.packet.PacketContextProto packetContext = 4;
-        net.link.LinkNotificationProto linkEvent = 5;
-
-    }
-}

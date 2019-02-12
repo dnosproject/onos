@@ -18,13 +18,15 @@ package org.onosproject.grpcintegration.app;
 
 
 import io.grpc.stub.StreamObserver;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationGrpc.EventNotificationImplBase;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.Notification;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.RegistrationRequest;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.RegistrationResponse;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.Topic;
+import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.topicType;
 import org.onosproject.grpc.net.link.models.LinkEventProto.LinkNotificationProto;
-import org.onosproject.grpc.net.models.ServicesProto.Notification;
-import org.onosproject.grpc.net.models.ServicesProto.RegistrationRequest;
-import org.onosproject.grpc.net.models.ServicesProto.RegistrationResponse;
-import org.onosproject.grpc.net.models.ServicesProto.Topic;
-import org.onosproject.grpc.net.models.ServicesProto.topicType;
 import org.onosproject.grpc.net.packet.models.PacketContextProtoOuterClass.PacketContextProto;
+import org.onosproject.grpcintegration.api.EventNotficationService;
 import org.onosproject.incubator.protobuf.models.net.link.LinkNotificationProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.packet.PacketContextProtoTranslator;
 import org.onosproject.net.device.DeviceEvent;
@@ -39,14 +41,14 @@ import org.onosproject.net.packet.PacketService;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.Reference;
-import org.onosproject.grpc.net.models.EventNotificationGrpc.EventNotificationImplBase;
-import org.onosproject.grpcintegration.api.EventNotficationService;
+import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.slf4j.Logger;
 
-
-import java.util.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -66,9 +68,6 @@ public class EventNotificationManager
     protected static Map<String, StreamObserver<Notification>>
             observerMap = new HashMap<>();
     protected static Set<String> clientList = new HashSet<>();
-    protected static Map<String, List<String>> clientKeyMap = new HashMap<>();
-    protected static List<List<StreamObserver<Notification>>> streamObserverList =
-            new ArrayList<>();
 
     ExecutorService executorService = Executors.newFixedThreadPool(1);
 
@@ -89,7 +88,7 @@ public class EventNotificationManager
     protected void activate() {
 
         log.info("Event Notification Service has been activated");
-        packetService.addProcessor(packetListener, PacketProcessor.director(11));
+        packetService.addProcessor(packetListener, PacketProcessor.director(10));
         linkService.addListener(linkListener);
         deviceService.addListener(deviceListener);
     }
@@ -118,8 +117,6 @@ public class EventNotificationManager
         observer.onNext(registrationResponse);
         observer.onCompleted();
     }
-
-
 
     @Override
     public void onEvent(Topic topic,

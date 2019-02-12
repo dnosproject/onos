@@ -16,5 +16,8 @@
 
 package org.onosproject.grpcintegration.api;
 
+/**
+ * API for the gRPC event notification service.
+ */
 public interface EventNotficationService {
 }

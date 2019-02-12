@@ -16,7 +16,9 @@
 
 package org.onosproject.grpcintegration.api;
 
-
+/**
+ * API for gRPC server.
+ */
 public interface GrpcServer {
 
 }

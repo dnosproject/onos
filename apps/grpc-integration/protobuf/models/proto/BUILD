@@ -70,13 +70,9 @@ PROTO_LIBS = [
     ":Region_proto",
     ":Permission_proto",
     ":Services_proto",
+    ":Status_proto",
+    ":EventNotification_proto",
 ]
-
-#osgi_proto_jar(
-#    name = "onos-core-protobuf-grpc-nb-proto",
-#    grpc_proto_lib = ":Services_proto",
-#    proto_libs = PROTO_LIBS,
-#)
 
 osgi_proto_jar(
     name = "onos-apps-grpc-integration-protobuf-models-proto",
@@ -84,20 +80,37 @@ osgi_proto_jar(
     proto_libs = PROTO_LIBS,
 )
 
-#### services ###
+#### grpc-integration app ####
+proto_library(
+    name = "Status_proto",
+    srcs = ["grpcintegration/StatusProto.proto"],
+    proto_source_root = PROTO_SOURCE_ROOT,
+)
+
+proto_library(
+    name = "EventNotification_proto",
+    srcs = ["grpcintegration/EventNotificationProto.proto"],
+    proto_source_root = PROTO_SOURCE_ROOT,
+    deps = [
+        ":LinkEvent_proto",
+        ":PacketContext_proto",
+    ],
+)
 
 proto_library(
     name = "Services_proto",
-    srcs = ["net/ServicesProto.proto"],
+    srcs = ["grpcintegration/ServicesProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
     deps = [
         ":ClusterId_proto",
         ":Device_proto",
+        ":EventNotification_proto",
         ":FlowRule_proto",
         ":LinkEvent_proto",
         ":OutboundPacket_proto",
         ":PacketContext_proto",
         ":Path_proto",
+        ":Status_proto",
         ":TopologyCluster_proto",
         ":TopologyGraph_proto",
         ":Topology_proto",

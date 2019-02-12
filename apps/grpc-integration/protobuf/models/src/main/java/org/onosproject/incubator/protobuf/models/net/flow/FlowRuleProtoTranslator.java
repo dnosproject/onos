@@ -16,10 +16,7 @@
 package org.onosproject.incubator.protobuf.models.net.flow;
 
 
-import org.onlab.osgi.DefaultServiceDirectory;
-import org.onosproject.core.ApplicationId;
-import org.onosproject.core.CoreService;
-import org.onosproject.grpc.net.flow.criteria.models.CriterionProtoOuterClass;
+
 import org.onosproject.grpc.net.flow.models.FlowRuleProto;
 import org.onosproject.net.DeviceId;
 import org.onosproject.net.flow.DefaultFlowRule;
@@ -82,7 +79,6 @@ public final class FlowRuleProtoTranslator {
         resultBuilder.forDevice(deviceId);
         resultBuilder.forTable(flowRule.getTableId());
         resultBuilder.withPriority(flowRule.getPriority());
-        //resultBuilder.withCookie(flowRule.getFlowId());
         resultBuilder.withSelector(TrafficSelectorProtoTranslator
                 .translate(flowRule.getSelector()));
         resultBuilder.withTreatment(TrafficTreatmentProtoTranslator

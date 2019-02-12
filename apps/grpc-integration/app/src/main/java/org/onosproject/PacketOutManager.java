@@ -18,8 +18,9 @@ package org.onosproject.grpcintegration.app;
 
 import io.grpc.stub.StreamObserver;
 import org.onlab.osgi.DefaultServiceDirectory;
-import org.onosproject.grpc.net.models.ServicesProto.PacketOutStatus;
-import org.onosproject.grpc.net.packet.models.OutboundPacketProtoOuterClass;
+
+import org.onosproject.grpc.grpcintegration.models.StatusProto.PacketOutStatus;
+import org.onosproject.grpc.net.packet.models.OutboundPacketProtoOuterClass.OutboundPacketProto;
 import org.onosproject.incubator.protobuf.models.net.packet.OutboundPacketProtoTranslator;
 import org.onosproject.net.packet.OutboundPacket;
 import org.onosproject.net.packet.PacketService;
@@ -29,7 +30,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.Reference;
 
-import org.onosproject.grpc.net.models.PacketOutServiceGrpc.PacketOutServiceImplBase;
+import org.onosproject.grpc.grpcintegration.models.PacketOutServiceGrpc.PacketOutServiceImplBase;
 import org.onosproject.grpcintegration.api.PacketOutService;
 import org.slf4j.Logger;
 
@@ -60,7 +61,7 @@ public class PacketOutManager
     }
 
     @Override
-    public void emit(OutboundPacketProtoOuterClass.OutboundPacketProto request,
+    public void emit(OutboundPacketProto request,
                      StreamObserver<PacketOutStatus> responseObserver) {
 
         OutboundPacket outboundPacket = OutboundPacketProtoTranslator.translate(request);

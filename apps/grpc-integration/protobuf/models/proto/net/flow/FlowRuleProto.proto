@@ -38,5 +38,6 @@ message FlowRuleProto {
     net.flow.TrafficSelectorProto selector = 9;
     net.flow.TrafficTreatmentProto treatment = 10;
     net.flow.FlowRemoveReasonProto reason = 11;
+    string app_name = 12;
 }
 

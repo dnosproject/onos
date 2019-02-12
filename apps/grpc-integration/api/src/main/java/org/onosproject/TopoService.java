@@ -16,5 +16,8 @@
 
 package org.onosproject.grpcintegration.api;
 
+/**
+ * API for gRPC based topology service.
+ */
 public interface TopoService {
 }

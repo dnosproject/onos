@@ -16,5 +16,8 @@
 
 package org.onosproject.grpcintegration.api;
 
+/**
+ * API for gRPC based flow service.
+ */
 public interface FlowService {
 }

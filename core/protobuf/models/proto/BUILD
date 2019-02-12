@@ -217,7 +217,6 @@ proto_library(
     name = "Instructions_proto",
     srcs = ["net/flow/instructions/InstructionsProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
-
 )
 
 proto_library(

@@ -5,8 +5,6 @@ BUNDLES = [
     "//apps/grpc-integration/api:onos-apps-grpc-integration-api",
     "//apps/grpc-integration/protobuf/models/proto:onos-apps-grpc-integration-protobuf-models-proto",
     "//apps/grpc-integration/protobuf/models:onos-apps-grpc-integration-protobuf-models",
-    #"//core/protobuf/models:onos-core-protobuf-models",
-    #"//core/protobuf/models/proto:onos-core-protobuf-models-proto",
     ":grpc-core-repkg",
     "@runtime_grpc_stub//jar",
     "@runtime_grpc_netty//jar",
