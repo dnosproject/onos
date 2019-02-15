@@ -7,12 +7,9 @@ import "apps/grpc-integration/protobuf/models/proto/net/packet/OutboundPacketPro
 import "apps/grpc-integration/protobuf/models/proto/net/flow/FlowRuleProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyGraphProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/topology/ClusterIdProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyClusterProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/PathProto.proto";
-import "apps/grpc-integration/protobuf/models/proto/net/DeviceProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/grpcintegration/EventNotificationProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/grpcintegration/StatusProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/grpcintegration/ControlMessagesProto.proto";
 
 
 // Corresponds to PacketOut service
@@ -31,38 +28,15 @@ service TopoService {
     rpc getGraph (Empty) returns (net.topology.TopologyGraphProto);
     rpc currentTopology (Empty) returns (net.topology.TopologyProto);
     rpc getPaths (getPathRequest) returns (Paths);
+    rpc getHosts (Empty) returns (Hosts);
 }
 
 // Corresponds to EventNotification service
 service EventNotification {
     rpc register (RegistrationRequest) returns (RegistrationResponse);
     rpc onEvent (Topic) returns (stream Notification);
-
 }
 
-message Empty {
-
-}
-
-message Paths {
-    repeated net.PathProto paths = 1;
-}
-
-message getPathRequest {
-    net.DeviceProto srcDevice = 1;
-    net.DeviceProto dstDevice = 2;
-
-
-}
-
-message getClusterRequest {
-    net.topology.TopologyProto topologyProto = 1;
-    net.topology.ClusterIdProto clusterIdProto = 2;
-}
-
-message ClusterIdSet {
-    repeated net.topology.ClusterIdProto clusterIdProto = 1;
-}
 
 
 

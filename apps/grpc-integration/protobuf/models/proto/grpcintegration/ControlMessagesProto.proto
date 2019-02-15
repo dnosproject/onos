@@ -1,0 +1,39 @@
+syntax = "proto3";
+option java_package = "org.onosproject.grpc.grpcintegration.models";
+
+package grpcintegration;
+
+import "apps/grpc-integration/protobuf/models/proto/net/DeviceProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/PathProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/HostProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/ClusterIdProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyClusterProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/topology/TopologyProto.proto";
+
+message Empty {
+
+}
+
+message Paths {
+    repeated net.PathProto paths = 1;
+}
+
+message getPathRequest {
+    net.DeviceProto srcDevice = 1;
+    net.DeviceProto dstDevice = 2;
+
+
+}
+
+message getClusterRequest {
+    net.topology.TopologyProto topologyProto = 1;
+    net.topology.ClusterIdProto clusterIdProto = 2;
+}
+
+message ClusterIdSet {
+    repeated net.topology.ClusterIdProto clusterIdProto = 1;
+}
+
+message Hosts {
+    repeated net.HostProto host = 1;
+}

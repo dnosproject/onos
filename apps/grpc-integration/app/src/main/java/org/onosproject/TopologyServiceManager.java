@@ -18,17 +18,22 @@ package org.onosproject.grpcintegration.app;
 
 import io.grpc.stub.StreamObserver;
 import org.onlab.osgi.DefaultServiceDirectory;
+import org.onosproject.grpc.grpcintegration.models.ServicesProto.Hosts;
 import org.onosproject.grpc.grpcintegration.models.ServicesProto.Empty;
 import org.onosproject.grpc.grpcintegration.models.ServicesProto.Paths;
 import org.onosproject.grpc.grpcintegration.models.ServicesProto.getPathRequest;
 import org.onosproject.grpc.grpcintegration.models.TopoServiceGrpc.TopoServiceImplBase;
+import org.onosproject.grpc.net.models.HostProtoOuterClass.HostProto;
 import org.onosproject.grpc.net.topology.models.TopologyGraphProtoOuterClass.TopologyGraphProto;
 import org.onosproject.grpc.net.topology.models.TopologyProtoOuterClass.TopologyProto;
 import org.onosproject.grpcintegration.api.TopoService;
+import org.onosproject.incubator.protobuf.models.net.HostProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.topology.TopologyGraphProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.topology.TopologyProtoTranslator;
 import org.onosproject.net.DeviceId;
+import org.onosproject.net.Host;
 import org.onosproject.net.Path;
+import org.onosproject.net.host.HostService;
 import org.onosproject.net.topology.Topology;
 import org.onosproject.net.topology.TopologyGraph;
 import org.onosproject.net.topology.TopologyService;
@@ -53,6 +58,9 @@ public class TopologyServiceManager
 
   @Reference(cardinality = ReferenceCardinality.MANDATORY)
   protected TopologyService topologyService;
+
+  @Reference(cardinality = ReferenceCardinality.MANDATORY)
+  protected HostService hostService;
 
   @Activate
   protected void activate() {
@@ -96,5 +104,20 @@ public class TopologyServiceManager
     Set<Path> paths = topologyService.getPaths(topology, srcDeviceId, dstDeviceId);
 
     Paths.Builder builder = Paths.newBuilder();
+  }
+
+  @Override
+  public void getHosts (Empty empty, StreamObserver<Hosts> observer) {
+      hostService = DefaultServiceDirectory.getService(HostService.class);
+      Hosts.Builder hostsBuilder = Hosts.newBuilder();
+
+      for(Host host:hostService.getHosts()) {
+          HostProto hostProto = HostProtoTranslator.translate(host);
+          hostsBuilder.addHost(hostProto);
+      }
+
+      observer.onNext(hostsBuilder.build());
+      observer.onCompleted();
+
   }
 }

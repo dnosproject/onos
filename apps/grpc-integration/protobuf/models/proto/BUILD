@@ -72,6 +72,7 @@ PROTO_LIBS = [
     ":Services_proto",
     ":Status_proto",
     ":EventNotification_proto",
+    ":ControlMessages_proto",
 ]
 
 osgi_proto_jar(
@@ -81,6 +82,21 @@ osgi_proto_jar(
 )
 
 #### grpc-integration app ####
+
+proto_library(
+    name = "ControlMessages_proto",
+    srcs = ["grpcintegration/ControlMessagesProto.proto"],
+    proto_source_root = PROTO_SOURCE_ROOT,
+    deps = [
+        ":ClusterId_proto",
+        ":Device_proto",
+        ":Host_proto",
+        ":Path_proto",
+        ":TopologyCluster_proto",
+        ":Topology_proto",
+    ],
+)
+
 proto_library(
     name = "Status_proto",
     srcs = ["grpcintegration/StatusProto.proto"],
@@ -102,16 +118,11 @@ proto_library(
     srcs = ["grpcintegration/ServicesProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
     deps = [
-        ":ClusterId_proto",
-        ":Device_proto",
+        ":ControlMessages_proto",
         ":EventNotification_proto",
         ":FlowRule_proto",
-        ":LinkEvent_proto",
         ":OutboundPacket_proto",
-        ":PacketContext_proto",
-        ":Path_proto",
         ":Status_proto",
-        ":TopologyCluster_proto",
         ":TopologyGraph_proto",
         ":Topology_proto",
     ],
