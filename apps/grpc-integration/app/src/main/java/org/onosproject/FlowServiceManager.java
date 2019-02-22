@@ -37,7 +37,8 @@ import org.slf4j.Logger;
 import static org.slf4j.LoggerFactory.getLogger;
 
 /**
- *  Implements Flow gRPC service.
+ *  Implements gRPC Flow service.
+ *
  */
 @Component(immediate = true, service = FlowService.class)
 public class FlowServiceManager

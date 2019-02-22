@@ -26,7 +26,7 @@ import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.Topic;
 import org.onosproject.grpc.grpcintegration.models.EventNotificationProto.topicType;
 import org.onosproject.grpc.net.link.models.LinkEventProto.LinkNotificationProto;
 import org.onosproject.grpc.net.packet.models.PacketContextProtoOuterClass.PacketContextProto;
-import org.onosproject.grpcintegration.api.EventNotficationService;
+import org.onosproject.grpcintegration.api.EventNotificationService;
 import org.onosproject.incubator.protobuf.models.net.link.LinkNotificationProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.packet.PacketContextProtoTranslator;
 import org.onosproject.net.device.DeviceEvent;
@@ -57,10 +57,10 @@ import static org.slf4j.LoggerFactory.getLogger;
 /**
  * Implements Event Notificiation gRPC service.
  */
-@Component(immediate = true, service = EventNotficationService.class)
+@Component(immediate = true, service = EventNotificationService.class)
 public class EventNotificationManager
         extends EventNotificationImplBase
-        implements EventNotficationService {
+        implements EventNotificationService {
 
 
     private final Logger log = getLogger(getClass());

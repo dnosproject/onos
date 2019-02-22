@@ -125,6 +125,8 @@ proto_library(
         ":Status_proto",
         ":TopologyGraph_proto",
         ":Topology_proto",
+        ":Host_proto",
+        ":HostId_proto"
     ],
 )
 

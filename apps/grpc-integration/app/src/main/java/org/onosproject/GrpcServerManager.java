@@ -16,11 +16,15 @@
 
 package org.onosproject.grpcintegration.app;
 
+import io.grpc.BindableService;
 import io.grpc.Server;
 import io.grpc.netty.NettyServerBuilder;
 import org.onlab.util.Tools;
 import org.onosproject.cfg.ComponentConfigService;
+import org.onosproject.grpcintegration.api.EventNotificationService;
+import org.onosproject.grpcintegration.api.FlowService;
 import org.onosproject.grpcintegration.api.GrpcServer;
+import org.onosproject.grpcintegration.api.PacketOutService;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -48,6 +52,7 @@ public class GrpcServerManager implements GrpcServer {
 
     @Reference(cardinality = ReferenceCardinality.MANDATORY)
     protected ComponentConfigService cfgService;
+
 
     protected Server server;
     private int grpcPort = GRPC_PORT_DEFAULT;
@@ -98,6 +103,7 @@ public class GrpcServerManager implements GrpcServer {
                             .addService(new EventNotificationManager())
                             .addService(new FlowServiceManager())
                             .addService(new TopologyServiceManager())
+                            .addService(new HostServiceManager())
                             .build()
                             .start();
         }

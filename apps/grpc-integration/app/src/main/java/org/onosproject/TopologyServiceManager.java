@@ -18,10 +18,10 @@ package org.onosproject.grpcintegration.app;
 
 import io.grpc.stub.StreamObserver;
 import org.onlab.osgi.DefaultServiceDirectory;
-import org.onosproject.grpc.grpcintegration.models.ServicesProto.Hosts;
-import org.onosproject.grpc.grpcintegration.models.ServicesProto.Empty;
-import org.onosproject.grpc.grpcintegration.models.ServicesProto.Paths;
-import org.onosproject.grpc.grpcintegration.models.ServicesProto.getPathRequest;
+import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.Hosts;
+import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.Empty;
+import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.Paths;
+import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.getPathRequest;
 import org.onosproject.grpc.grpcintegration.models.TopoServiceGrpc.TopoServiceImplBase;
 import org.onosproject.grpc.net.models.HostProtoOuterClass.HostProto;
 import org.onosproject.grpc.net.topology.models.TopologyGraphProtoOuterClass.TopologyGraphProto;
@@ -72,6 +72,11 @@ public class TopologyServiceManager
     log.info("Topology Service has been deactivated");
   }
 
+  /**
+   * Implements getGraph function.
+   * @param empty {@link Empty}
+   * @param observer Returns {@link TopologyGraphProto}
+   */
   @Override
   public void getGraph(Empty empty, StreamObserver<TopologyGraphProto> observer) {
     topologyService = DefaultServiceDirectory.getService(TopologyService.class);
@@ -83,6 +88,11 @@ public class TopologyServiceManager
     observer.onCompleted();
   }
 
+  /**
+   * Implements currentTopology function
+   * @param empty {@link Empty}
+   * @param observer Returns {@link TopologyProto}
+   */
   @Override
   public void currentTopology(Empty empty, StreamObserver<TopologyProto> observer) {
 
@@ -94,6 +104,11 @@ public class TopologyServiceManager
     observer.onCompleted();
   }
 
+  /**
+   *
+   * @param getPathRequest path Request
+   * @param observer
+   */
   @Override
   public void getPaths(getPathRequest getPathRequest, StreamObserver<Paths> observer) {
 
@@ -106,18 +121,5 @@ public class TopologyServiceManager
     Paths.Builder builder = Paths.newBuilder();
   }
 
-  @Override
-  public void getHosts (Empty empty, StreamObserver<Hosts> observer) {
-      hostService = DefaultServiceDirectory.getService(HostService.class);
-      Hosts.Builder hostsBuilder = Hosts.newBuilder();
 
-      for(Host host:hostService.getHosts()) {
-          HostProto hostProto = HostProtoTranslator.translate(host);
-          hostsBuilder.addHost(hostProto);
-      }
-
-      observer.onNext(hostsBuilder.build());
-      observer.onCompleted();
-
-  }
 }

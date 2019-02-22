@@ -60,6 +60,11 @@ public class PacketOutManager
         log.info("deactivated");
     }
 
+    /**
+     * Emits packet out.
+     * @param request {@link OutboundPacketProto}
+     * @param responseObserver {@link PacketOutStatus}
+     */
     @Override
     public void emit(OutboundPacketProto request,
                      StreamObserver<PacketOutStatus> responseObserver) {

@@ -34,6 +34,12 @@ message ClusterIdSet {
     repeated net.topology.ClusterIdProto clusterIdProto = 1;
 }
 
+// Related to HostService
+
 message Hosts {
     repeated net.HostProto host = 1;
+}
+
+message HostCountProto {
+    int32 count = 1;
 }
