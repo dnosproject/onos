@@ -12,6 +12,10 @@ import "apps/grpc-integration/protobuf/models/proto/grpcintegration/StatusProto.
 import "apps/grpc-integration/protobuf/models/proto/grpcintegration/ControlMessagesProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/HostProto.proto";
 import "apps/grpc-integration/protobuf/models/proto/net/HostIdProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/PortProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/DeviceIdProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/DeviceProto.proto";
+import "apps/grpc-integration/protobuf/models/proto/net/ConnectPointProto.proto";
 
 
 // Corresponds to PacketOut service
@@ -37,12 +41,17 @@ service HostService {
     rpc getHosts (Empty) returns (Hosts);
     rpc getHostCount (Empty) returns (HostCountProto);
     rpc getHost (net.HostIdProto) returns (net.HostProto);
+    rpc getConnectedHostsByDeviceId (net.DeviceIdProto) returns (Hosts);
+    rpc getConnectedHostsByConnectedPoint (net.ConnectPointProto) returns (Hosts);
 
 }
 
 // Corresponds to Device Service
 service DeviceService {
-
+     rpc getDeviceCount (Empty) returns (DeviceCountProto);
+     rpc getDevices (Empty) returns (Devices);
+     rpc getPorts (net.DeviceIdProto) returns (Ports);
+     rpc getDevice (net.DeviceIdProto) returns (net.DeviceProto);
 }
 
 // Corresponds to Core Service

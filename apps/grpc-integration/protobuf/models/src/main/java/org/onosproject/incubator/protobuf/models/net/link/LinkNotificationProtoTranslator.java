@@ -1,7 +1,7 @@
 package org.onosproject.incubator.protobuf.models.net.link;
 
 import org.onosproject.grpc.net.link.models.LinkEnumsProto;
-import org.onosproject.grpc.net.link.models.LinkEventProto;
+import org.onosproject.grpc.net.link.models.LinkEventProto.LinkNotificationProto;
 import org.onosproject.grpc.net.models.ConnectPointProtoOuterClass;
 import org.onosproject.grpc.net.models.LinkProtoOuterClass;
 import org.onosproject.net.link.LinkEvent;
@@ -29,10 +29,10 @@ public class LinkNotificationProtoTranslator {
 
 
 
-    public static LinkEventProto.LinkNotificationProto translate(LinkEvent linkEvent)
+    public static LinkNotificationProto translate(LinkEvent linkEvent)
     {
 
-        LinkEventProto.LinkNotificationProto notification = LinkEventProto.LinkNotificationProto.newBuilder()
+        LinkNotificationProto notification = LinkNotificationProto.newBuilder()
                 .setLinkEventType(getProtoType(linkEvent))
                 .setLink(LinkProtoOuterClass.LinkProto.newBuilder()
                         .setState(LinkEnumsProto.LinkStateProto.ACTIVE

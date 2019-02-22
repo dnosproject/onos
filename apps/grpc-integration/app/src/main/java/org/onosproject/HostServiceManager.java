@@ -21,11 +21,16 @@ import org.onlab.osgi.DefaultServiceDirectory;
 import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.HostCountProto;
 import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.Hosts;
 import org.onosproject.grpc.grpcintegration.models.ControlMessagesProto.Empty;
+import org.onosproject.grpc.net.models.ConnectPointProtoOuterClass.ConnectPointProto;
+import org.onosproject.grpc.net.models.DeviceIdProtoOuterClass.DeviceIdProto;
 import org.onosproject.grpc.net.models.HostIdProtoOuterClass.HostIdProto;
 import org.onosproject.grpc.net.models.HostProtoOuterClass.HostProto;
 import org.onosproject.grpcintegration.api.HostgrpcService;
+import org.onosproject.incubator.protobuf.models.net.ConnectPointProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.HostIdProtoTranslator;
 import org.onosproject.incubator.protobuf.models.net.HostProtoTranslator;
+import org.onosproject.net.ConnectPoint;
+import org.onosproject.net.DeviceId;
 import org.onosproject.net.Host;
 import org.onosproject.net.host.HostService;
 import org.osgi.service.component.annotations.Activate;
@@ -35,6 +40,10 @@ import org.onosproject.grpc.grpcintegration.models.HostServiceGrpc.HostServiceIm
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.slf4j.Logger;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
@@ -116,6 +125,52 @@ public class HostServiceManager
 
         observer.onNext(hostProto);
         observer.onCompleted();
+    }
+
+    /**
+     * Returns list of hosts by DeviceId.
+     * @param deviceIdProto {@link DeviceIdProto}
+     * @param observer {@link Hosts}
+     */
+    @Override
+    public void getConnectedHostsByDeviceId (DeviceIdProto deviceIdProto,
+                                             StreamObserver<Hosts> observer) {
+
+        hostService = DefaultServiceDirectory.getService(HostService.class);
+        Hosts.Builder hostsProtoBuilder = Hosts.newBuilder();
+        Set<Host> hosts = hostService
+                .getConnectedHosts(DeviceId.deviceId(deviceIdProto.getDeviceId()));
+
+        for(Host host: hosts) {
+            hostsProtoBuilder.addHost(HostProtoTranslator.translate(host));
+        }
+
+        observer.onNext(hostsProtoBuilder.build());
+        observer.onCompleted();
+    }
+
+    /**
+     * Returns list of hosts by ConnectedPoint.
+     * @param connectPointProto {@link ConnectPointProto}
+     * @param observer {@link Hosts}
+     */
+    @Override
+    public void getConnectedHostsByConnectedPoint (ConnectPointProto connectPointProto,
+                                                   StreamObserver<Hosts> observer) {
+
+        hostService = DefaultServiceDirectory.getService(HostService.class);
+        Hosts.Builder hostsProtoBuilder = Hosts.newBuilder();
+        Optional<ConnectPoint> connectPoint = ConnectPointProtoTranslator
+                .translate(connectPointProto);
+        Set<Host> hosts = hostService.getConnectedHosts(connectPoint.get());
+
+        for(Host host: hosts) {
+            hostsProtoBuilder.addHost(HostProtoTranslator.translate(host));
+        }
+
+        observer.onNext(hostsProtoBuilder.build());
+        observer.onCompleted();
+
     }
 
 }

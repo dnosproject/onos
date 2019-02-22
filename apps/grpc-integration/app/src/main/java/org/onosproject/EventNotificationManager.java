@@ -118,6 +118,11 @@ public class EventNotificationManager
         observer.onCompleted();
     }
 
+    /**
+     * Subcribes to a specific type of event.
+     * @param topic {@link Topic}
+     * @param observer {@link Notification}
+     */
     @Override
     public void onEvent(Topic topic,
                         StreamObserver<Notification> observer) {
@@ -128,6 +133,9 @@ public class EventNotificationManager
 
     }
 
+    /**
+     * Internal {@link PacketProcessor} to stream PACKET_IN events.
+     */
     class InternalPacketProcessor implements PacketProcessor {
 
         @Override
@@ -160,6 +168,9 @@ public class EventNotificationManager
         }
     }
 
+    /**
+     * Internal {@link DeviceListener} to stream device events.
+     */
     private class InternalDeviceListener implements DeviceListener {
 
         @Override
@@ -168,6 +179,9 @@ public class EventNotificationManager
         }
     }
 
+    /**
+     * Internal {@link LinkListener to stream link events}
+     */
     private class InternalLinkListener implements LinkListener {
 
         @Override

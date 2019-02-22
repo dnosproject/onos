@@ -92,6 +92,7 @@ proto_library(
         ":Device_proto",
         ":Host_proto",
         ":Path_proto",
+        ":Port_proto",
         ":TopologyCluster_proto",
         ":Topology_proto",
     ],
@@ -118,15 +119,19 @@ proto_library(
     srcs = ["grpcintegration/ServicesProto.proto"],
     proto_source_root = PROTO_SOURCE_ROOT,
     deps = [
+        ":ConnectPoint_proto",
         ":ControlMessages_proto",
+        ":DeviceId_proto",
+        ":Device_proto",
         ":EventNotification_proto",
         ":FlowRule_proto",
+        ":HostId_proto",
+        ":Host_proto",
         ":OutboundPacket_proto",
+        ":Port_proto",
         ":Status_proto",
         ":TopologyGraph_proto",
         ":Topology_proto",
-        ":Host_proto",
-        ":HostId_proto"
     ],
 )
 
